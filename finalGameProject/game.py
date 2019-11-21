@@ -35,6 +35,67 @@
 
 #Save points
 # Can run multiple races where best out of 3 races wins the tournament
+#Areeba Kausar (ak3rej) and Faiz Khan (fk6jr)
+
+# Game Idea: Multiplayer Race taking place
+import pygame
+import gamebox
+
+#Start Screen & Background
+camera = gamebox.Camera(800, 600)
+
+#Boundaries/walls
+outer1=gamebox.from_color(400,0,'red',800,20)
+outer2=gamebox.from_color(0,300,'red',20,600)
+outer3=gamebox.from_color(400,600,'red',800,20)
+outer4=gamebox.from_color(800,300,'red',20,600)
+divider=gamebox.from_color(400,300,'red',10,600)
+walls=[outer1,outer2,outer3,outer4,divider]
+#Movement of Players
+p1=gamebox.from_color(15,15,'yellow',10,10)
+p2=gamebox.from_color(785,15,'yellow',10,10)
+players=[p1,p2]
+def handle_keys(keys):
+  if pygame.K_RIGHT in keys:
+    p2.x += 5
+  if pygame.K_LEFT in keys:
+    p2.x -= 5
+  if pygame.K_UP in keys:
+    p2.y -= 5
+  if pygame.K_DOWN in keys:
+    p2.y += 5
+  if pygame.K_d in keys:
+    p1.x += 5
+  if pygame.K_a in keys:
+    p1.x -= 5
+  if pygame.K_w in keys:
+    p1.y -= 5
+  if pygame.K_s in keys:
+    p1.y += 5
+
+#Physics of Movement
+
+
+#Interactives: power ups
+
+
+#Timers
+
+
+#Drawing
+def tick(keys):
+    camera.clear('black')
+
+
+camera.draw(outer1)
+camera.draw(outer2)
+camera.draw(outer3)
+camera.draw(outer4)
+camera.draw(divider)
+camera.display()
+
+gamebox.timer_loop(30,tick)
+
 
 
 
