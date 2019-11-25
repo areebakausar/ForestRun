@@ -1,48 +1,13 @@
 #Areeba Kausar (ak3rej) and Faiz Khan (fk6jr)
 
 # Game Idea: Multiplayer Race taking place
-
-# Required Features:
-
-# User Input: Two players will be laying the game, one will use w and s keys,
-# other will use and up and down arrow. Game will start with pressing of spacebar
-
-# Graphics/Images spritesheet of two characters will be inserted who will be running
-# through the game
-
-# Start Screen will be built using camera. It will disappear once spacebar is hit
-
-# window size: gamebox.Camera(600, 400) will be implemented
-
-# Optional Features:
-
-#Two players: Move through an obstacle course, starting from opposite sides of the
-# screen and working to reach the middle first
-
-#Collectibles
-#Power- ups are spread around the course, and users collect them to help them win
-#Super speed→ allows player to speed through the obstacle course
-# Teleportation→ if you collect this power-up you mover to a further point in the game
-# Time saver→ takes 3 or 4 seconds off the players timer
-
-#Timer: In the corner, counts each of the players individual times
-# Determines winner in the end
-
-# Health bar:
-# If player hits the boundary, they lose a life
-# Boundaries are spaced close at some points and farther at others making it more
-# difficult to navigate through the maze
-
-#Save points
-# Can run multiple races where best out of 3 races wins the tournament
-#Areeba Kausar (ak3rej) and Faiz Khan (fk6jr)
-
-# Game Idea: Multiplayer Race taking place
 import pygame
 import gamebox
 
 #Start Screen & Background
 camera = gamebox.Camera(800, 600)
+
+
 
 #Boundaries/walls
 outer1=gamebox.from_color(400,0,'red',800,20)
@@ -50,12 +15,30 @@ outer2=gamebox.from_color(0,300,'red',20,600)
 outer3=gamebox.from_color(400,600,'red',800,20)
 outer4=gamebox.from_color(800,300,'red',20,600)
 divider=gamebox.from_color(400,300,'red',10,600)
-walls=[outer1,outer2,outer3,outer4,divider]
+inner1=gamebox.from_color(160,70,'red',340,8)
+inner2=gamebox.from_color(640,70,'red',340,8)
+inner3=gamebox.from_color(570,140,'red',340,8)
+inner4=gamebox.from_color(640,210,'red',340,8)
+inner5=gamebox.from_color(570,280,'red',340,8)
+inner6=gamebox.from_color(640,350,'red',340,8)
+inner7=gamebox.from_color(570,420,'red',340,8)
+inner8=gamebox.from_color(640,490,'red',340,8)
+inner9=gamebox.from_color(230,140,'red',340,8)
+inner10=gamebox.from_color(160,210,'red',340,8)
+inner12=gamebox.from_color(230,280,'red',340,8)
+inner13=gamebox.from_color(160,350,'red',340,8)
+inner14=gamebox.from_color(230,420,'red',340,8)
+inner15=gamebox.from_color(160,490,'red',340,8)
+
+walls=[outer1,outer2,outer3,outer4,divider,inner1,inner2,inner3,inner4,inner5,inner6,inner7,inner8,
+       inner9,inner10,inner12,inner13,inner14,inner15]
+
+
 #Movement of Players
-p1=gamebox.from_color(15,15,'yellow',10,10)
-p2=gamebox.from_color(785,15,'yellow',10,10)
+p1=gamebox.from_color(30,40,'yellow',10,10)
+p2=gamebox.from_color(770,40,'yellow',10,10)
 players=[p1,p2]
-def handle_keys(keys):
+def move_players(keys):
   if pygame.K_RIGHT in keys:
     p2.x += 5
   if pygame.K_LEFT in keys:
@@ -73,6 +56,13 @@ def handle_keys(keys):
   if pygame.K_s in keys:
     p1.y += 5
 
+def draw_players(keys):
+    move_players(keys)
+    for wall in walls:
+        for player in players:
+            player.move_to_stop_overlapping(wall)
+    for player in players:
+        camera.draw(player)
 #Physics of Movement
 
 
@@ -81,22 +71,19 @@ def handle_keys(keys):
 
 #Timers
 
+def draw_walls():
+    for box in walls:
+        camera.draw(box)
 
 #Drawing
 def tick(keys):
     camera.clear('black')
+    draw_walls()
+    draw_players(keys)
+
+    camera.display()
 
 
-camera.draw(outer1)
-camera.draw(outer2)
-camera.draw(outer3)
-camera.draw(outer4)
-camera.draw(divider)
-camera.display()
 
 gamebox.timer_loop(30,tick)
-
-
-
-
 
