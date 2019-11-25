@@ -25,13 +25,13 @@ inner2=gamebox.from_color(570,550,'violet',340,8)
 inner3=gamebox.from_color(570,150,'peachpuff',340,8)
 inner4=gamebox.from_color(640,210,'sandybrown',340,8)
 inner5=gamebox.from_color(570,280,'gold',340,8)
-inner6=gamebox.from_color(640,350,'turquoise',340,8)
+inner6=gamebox.from_color(640,350,'palegreen',340,8)
 inner7=gamebox.from_color(570,420,'royal blue',340,8)
 inner8=gamebox.from_color(640,490,'mediumslateblue',340,8)
 inner9=gamebox.from_color(230,150,'peachpuff',340,8)
 inner10=gamebox.from_color(160,210,'sandybrown',340,8)
 inner12=gamebox.from_color(230,280,'gold',340,8)
-inner13=gamebox.from_color(160,350,'turquoise',340,8)
+inner13=gamebox.from_color(160,350,'palegreen',340,8)
 inner14=gamebox.from_color(230,420,'royal blue',340,8)
 inner15=gamebox.from_color(160,490,'mediumslateblue',340,8)
 
@@ -166,11 +166,7 @@ def draw_players(keys):
     for player in players:
         camera.draw(player)
 
-
 #Interactives: power ups
-
-
-#Timers
 
 # background drawing
 
@@ -310,6 +306,7 @@ def tick(keys):
         draw_lives_p2(p2_lives)
         draw_scorebox()
 
+        #Timers
         timer_box = gamebox.from_text(400, camera.top + 50, "Time remaining: " + str(timer), 24, "white")
         timer -= 1
         camera.draw(timer_box)
