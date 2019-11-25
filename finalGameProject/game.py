@@ -195,14 +195,14 @@ def draw_flames():
         camera.draw(flame)
 
 def move_flames():
-    for flame in flames_r:
-        flame.x -= 3
-        if flame.x < -15:
-            flame.x = 785
-    for flame in flames_l:
-        flame.x += 3
-        if flame.x < 15:
-            flame.x = 5
+    for flame_r in flames_r:
+        flame_r.x -= 3
+        if flame_r.x < -15:
+            flame_r.x = 785
+    for flame_l in flames_l:
+        flame_l.x += 3
+        if flame_l.x > 815:
+            flame_l.x = 15
 
 def draw_lives_p1(num_lives):
     first_x = camera.left+20
@@ -219,9 +219,9 @@ def draw_lives_p2(num_lives):
         camera.draw(life)
 
 def draw_scorebox():
-    score_box_1 = gamebox.from_text(350, camera.top+20, "Score: " + str(p1_score), 24, "white")
+    score_box_1 = gamebox.from_text(300, camera.top+20, "Player 1 Score: " + str(p1_score), 24, "white")
     camera.draw(score_box_1)
-    score_box_2 = gamebox.from_text(450, camera.top+20, "Score: " + str(p2_score), 24, "white")
+    score_box_2 = gamebox.from_text(500, camera.top+20, "Player 2 Score: " + str(p2_score), 24, "white")
     camera.draw(score_box_2)
 
 #Drawing
@@ -237,6 +237,17 @@ def tick(keys):
     global p2_score
     global game_status
     global timer
+
+    #Setting Results:
+
+    if p1_lives == 0:
+        result = gamebox.from_text(400, 100, "Player 2 Won", 100, 'green', True, False)
+        camera.draw(result)
+        game_on = False
+    if p2_lives == 0:
+        result = gamebox.from_text(400, 100, "Player 1 Won", 100, 'green', True, False)
+        camera.draw(result)
+        game_on = False
 
     if timer == 0:
        if p2_score == p1_score:
@@ -308,20 +319,10 @@ def tick(keys):
                 p1.move_to_stop_overlapping(flame)
                 p1_lives -= 1
                 p1.center = [40,120]
-                if p1_lives == 0:
-                    result = gamebox.from_text(400, 100, "Player 2 Won", 100, 'green', True, False)
-                    camera.draw(result)
-                    game_on = False
-                    game_status = '-2'
             if p2.touches(flame):
                 p2.move_to_stop_overlapping(flame)
                 p2_lives -= 1
                 p2.center = [760, 120]
-                if p2_lives == 0:
-                    result = gamebox.from_text(400, 100, "Player 1 Won", 100, 'green', True, False)
-                    camera.draw(result)
-                    game_on = False
-                    game_status = '-2'
 
     camera.display()
 
