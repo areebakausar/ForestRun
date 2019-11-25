@@ -63,6 +63,7 @@ def draw_players(keys):
             player.move_to_stop_overlapping(wall)
     for player in players:
         camera.draw(player)
+
 #Physics of Movement
 
 
@@ -76,10 +77,56 @@ def draw_walls():
         camera.draw(box)
 
 #Drawing
+game_on=False
+
 def tick(keys):
     camera.clear('black')
-    draw_walls()
-    draw_players(keys)
+    global game_on
+
+    if pygame.K_SPACE not in keys and game_on==False:
+        title1 = gamebox.from_text(400, 100, "Forest Run", 100, 'green', True, False)
+        title2 = gamebox.from_text(400, 200, "by Faiz Khan (fk6jr) and Areeba Kausar (ak3rej)", 30, 'white',
+                                   True, False)
+        title3 = gamebox.from_text(400, 300,
+                                   "This is a two player game in which players race to get through the forest.",
+                                   24, 'white', False, False)
+        title5=  gamebox.from_text(400, 325,"Player 1 (left on screen) will use the WASD keys to move up, left, down, and right respectively.",
+                                  24,'white',False,False)
+        title6 = gamebox.from_text(400, 350,
+                                   "Player 2 (right on screen) will use the arrow keys to move. ",
+                                   24, 'white', False, False)
+        title7 = gamebox.from_text(400, 375,
+                                   "Avoid losing lives by not touching the red walls, trees, or stones along the path.",
+                                   24, 'white', False, False)
+        title8 = gamebox.from_text(400, 400,
+                                   "Collect power-ups which will make your player faster.", 24, 'white', False, False)
+        title9 = gamebox.from_text(400, 425,
+                                   "Winner is the one who finishes first!", 24, 'white', False, False)
+
+        title4 = gamebox.from_text(400, 525,
+                                   "Press the space bar to start", 24, 'white', True, False)
+        camera.draw(title1)
+        camera.draw(title2)
+        camera.draw(title3)
+        camera.draw(title4)
+        camera.draw(title5)
+        camera.draw(title6)
+        camera.draw(title7)
+        camera.draw(title8)
+        camera.draw(title9)
+
+
+
+
+
+
+    if pygame.K_SPACE in keys:
+        game_on=True
+    if game_on==True:
+        draw_walls()
+        draw_players(keys)
+
+
 
     camera.display()
 
