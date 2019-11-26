@@ -220,10 +220,10 @@ def draw_bushes():
     for bush in bushes:
         camera.draw(bush)
         if p1.touches(bush):
-            p1.move_both_to_stop_overlapping(bush)
             p1_score -= 1
+            p1.move_to_stop_overlapping(bush)
         if p2.touches(bush):
-            p2.move_both_to_stop_overlapping(bush)
+            p2.move_to_stop_overlapping(bush)
             p2_score -= 1
 
 def draw_flames():
@@ -246,14 +246,14 @@ def draw_gems():
         camera.draw(gem_l)
         if p1.touches(gem_l):
             p1_score += 100
-            p1.move_both_to_stop_overlapping(gem_l)
+            p1.move_to_stop_overlapping(gem_l)
             gem_l.center = [random.randint(15,385), random.randint(115,785)]
             camera.draw(gem_l)
     for gem_r in gems_r:
         camera.draw(gem_r)
         if p2.touches(gem_r):
             p2_score += 100
-            p2.move_both_to_stop_overlapping(gem_r)
+            p2.move_to_stop_overlapping(gem_r)
             gem_r.center = [random.randint(415,585), random.randint(115,785)]
             camera.draw(gem_r)
 
@@ -355,15 +355,15 @@ def tick(keys):
                                    "Player 2 (right on screen) will use the arrow keys to move. ",
                                    24, 'white', False, False)
         title7 = gamebox.from_text(400, 375,
-                                   "Avoid losing lives by not touching the flames. Avoid Bushes to not lose score",
+                                   "Avoid losing lives by not touching the flames. Avoid Bushes to not lose poinyts",
                                    24, 'white', False, False)
         title8 = gamebox.from_text(400, 400,
-                                   "Collect Gems to add to score. ", 24, 'white', False, False)
+                                   "Collect Gems to add to score. Game will end when Timer Runs out ", 24, 'white', False, False)
         title9 = gamebox.from_text(400, 425,
                                    "Winner is the one who collects most points before timer runs out!", 24, 'white', False, False)
 
         title4 = gamebox.from_text(400, 525,
-                                   "Press the space bar to start", 24, 'white', True, False)
+                                   "Press the space bar to start. MAY THE ODDS BE FOREVER IN YOUR FAVOR", 24, 'green', True, False)
         camera.draw(title1)
         camera.draw(title2)
         camera.draw(title3)
