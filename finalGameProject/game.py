@@ -12,7 +12,7 @@ p1_lives = 3
 p2_lives = 3
 p1_score = 0
 p2_score = 0
-timer = 10000
+timer = 500
 
 #Boundaries/walls
 outer1=gamebox.from_color(400,100,'tomato',800,5)
@@ -132,6 +132,46 @@ flames_r = [flame1,flame2,flame3,flame4,flame5,flame6]
 flames_l = [flame7,flame8,flame9,flame10,flame11,flame12]
 flames = [flame1,flame2,flame3,flame4,flame5,flame6,flame7,flame8,flame9,flame10,flame11,flame12]
 
+# Creation of Collectibles
+
+gem1_l = gamebox.from_image(random.randint(15,385), random.randint(110,140), "collectible_jewel1.png",)
+gem1_l.scale_by(0.03)
+gem2_l = gamebox.from_image(random.randint(15,385), random.randint(160,200), "collectible_jewel2.png",)
+gem2_l.scale_by(0.03)
+gem3_l = gamebox.from_image(random.randint(15,385), random.randint(220,270), "collectible_jewel1.png",)
+gem3_l.scale_by(0.03)
+gem4_l = gamebox.from_image(random.randint(15,385), random.randint(300,340), "collectible_jewel2.png",)
+gem4_l.scale_by(0.03)
+gem5_l = gamebox.from_image(random.randint(15,385), random.randint(360,410), "collectible_jewel1.png",)
+gem5_l.scale_by(0.03)
+gem6_l = gamebox.from_image(random.randint(15,385), random.randint(430,480), "collectible_jewel2.png",)
+gem6_l.scale_by(0.03)
+gem7_l = gamebox.from_image(random.randint(15,385), random.randint(500,540), "collectible_jewel1.png",)
+gem7_l.scale_by(0.03)
+gem8_l = gamebox.from_image(random.randint(15,385), random.randint(565,595), "collectible_jewel2.png",)
+gem8_l.scale_by(0.03)
+
+gem1_r = gamebox.from_image(random.randint(415,785), random.randint(110,140), "collectible_jewel1.png",)
+gem1_r.scale_by(0.03)
+gem2_r = gamebox.from_image(random.randint(415,785), random.randint(160,200), "collectible_jewel2.png",)
+gem2_r.scale_by(0.03)
+gem3_r = gamebox.from_image(random.randint(415,785), random.randint(220,270), "collectible_jewel1.png",)
+gem3_r.scale_by(0.03)
+gem4_r = gamebox.from_image(random.randint(415,785), random.randint(300,340), "collectible_jewel2.png",)
+gem4_r.scale_by(0.03)
+gem5_r = gamebox.from_image(random.randint(415,785), random.randint(360,410), "collectible_jewel1.png",)
+gem5_r.scale_by(0.03)
+gem6_r = gamebox.from_image(random.randint(415,785), random.randint(430,480), "collectible_jewel2.png",)
+gem6_r.scale_by(0.03)
+gem7_r = gamebox.from_image(random.randint(415,785), random.randint(500,540), "collectible_jewel1.png",)
+gem7_r.scale_by(0.03)
+gem8_r = gamebox.from_image(random.randint(415,785), random.randint(565,595), "collectible_jewel2.png",)
+gem8_r.scale_by(0.03)
+
+gems_l = [gem1_l,gem2_l,gem3_l,gem4_l,gem5_l,gem6_l,gem7_l,gem8_l]
+gems_r = [gem1_r,gem2_r,gem3_r,gem4_r,gem5_r,gem6_r,gem7_r,gem8_r]
+
+
 #Movement of Players
 p1=gamebox.from_color(40,120,'cyan',10,10)
 p2=gamebox.from_color(760,120,'lawngreen',10,10)
@@ -180,11 +220,11 @@ def draw_bushes():
     for bush in bushes:
         camera.draw(bush)
         if p1.touches(bush):
-            p1_score -= 1
             p1.move_both_to_stop_overlapping(bush)
+            p1_score -= 1
         if p2.touches(bush):
-            p2_score -= 1
             p2.move_both_to_stop_overlapping(bush)
+            p2_score -= 1
 
 def draw_flames():
     for flame in flames:
@@ -199,6 +239,24 @@ def move_flames():
         flame_l.x += 3
         if flame_l.x > 815:
             flame_l.x = 15
+
+def draw_gems():
+    global p1_score,p2_score
+    for gem_l in gems_l:
+        camera.draw(gem_l)
+        if p1.touches(gem_l):
+            p1_score += 100
+            p1.move_both_to_stop_overlapping(gem_l)
+            gem_l.center = [random.randint(15,385), random.randint(115,785)]
+            camera.draw(gem_l)
+    for gem_r in gems_r:
+        camera.draw(gem_r)
+        if p2.touches(gem_r):
+            p2_score += 100
+            p2.move_both_to_stop_overlapping(gem_r)
+            gem_r.center = [random.randint(415,585), random.randint(115,785)]
+            camera.draw(gem_r)
+
 
 def draw_lives_p1(num_lives):
     first_x = camera.left+20
@@ -220,6 +278,17 @@ def draw_scorebox():
     score_box_2 = gamebox.from_text(500, camera.top+20, "Player 2 Score: " + str(p2_score), 24, "white")
     camera.draw(score_box_2)
 
+def game_reset():
+    global  game_on,game_status,p1_score,p1_lives,p2_lives,p2_score,timer
+    p1_lives = 3
+    p2_lives = 3
+    p1_score = 0
+    p2_score = 0
+    timer = 500
+    game_on = True
+    game_status = '1'
+
+
 #Drawing
 game_on = False
 game_status = '0'
@@ -240,24 +309,37 @@ def tick(keys):
         result = gamebox.from_text(400, 100, "Player 2 Won", 100, 'green', True, False)
         camera.draw(result)
         game_on = False
+        if pygame.K_SPACE in keys:
+            game_reset()
+
     if p2_lives == 0:
         result = gamebox.from_text(400, 100, "Player 1 Won", 100, 'green', True, False)
         camera.draw(result)
         game_on = False
+        if pygame.K_SPACE in keys:
+            game_reset()
 
     if timer == 0:
        if p2_score == p1_score:
-            result = gamebox.from_text(400, 100, "It is a Tie", 100, 'green', True, False)
+            result = gamebox.from_text(400, 100, "It is a Tie. ", 100, 'green', True, False)
             camera.draw(result)
             game_on = False
+            if pygame.K_SPACE in keys:
+                game_reset()
+
        elif p1_score > p2_score:
-           result1 = gamebox.from_text(400, 300, "Player 1 Won", 500, 'green')
+           result1 = gamebox.from_text(400, 300, "Player 1 Won", 100, 'green')
            camera.draw(result1)
            game_on = False
+           if pygame.K_SPACE in keys:
+               game_reset()
+
        elif p2_score > p1_score:
-           result2 = gamebox.from_text(400, 300, "Player 2 Won", 500, 'green')
+           result2 = gamebox.from_text(400, 300, "Player 2 Won", 100, 'green')
            camera.draw(result2)
            game_on = False
+           if pygame.K_SPACE in keys:
+               game_reset()
 
 
     if pygame.K_SPACE not in keys and game_on == False and game_status == '0':
@@ -301,6 +383,7 @@ def tick(keys):
         draw_bushes()
         draw_flames()
         move_flames()
+        draw_gems()
         draw_players(keys)
         draw_lives_p1(p1_lives)
         draw_lives_p2(p2_lives)
