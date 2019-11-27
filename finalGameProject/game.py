@@ -247,14 +247,14 @@ def draw_gems():
         if p1.touches(gem_l):
             p1_score += 100
             p1.move_to_stop_overlapping(gem_l)
-            gem_l.center = [random.randint(15,385), random.randint(115,785)]
+            gem_l.center = [random.randint(15,385), random.randint(115,585)]
             camera.draw(gem_l)
     for gem_r in gems_r:
         camera.draw(gem_r)
         if p2.touches(gem_r):
             p2_score += 100
             p2.move_to_stop_overlapping(gem_r)
-            gem_r.center = [random.randint(415,585), random.randint(115,785)]
+            gem_r.center = [random.randint(415,785), random.randint(115,585)]
             camera.draw(gem_r)
 
 
@@ -280,6 +280,8 @@ def draw_scorebox():
 
 def game_reset():
     global  game_on,game_status,p1_score,p1_lives,p2_lives,p2_score,timer
+    p1.center = [40, 120]
+    p2.center = [760, 120]
     p1_lives = 3
     p2_lives = 3
     p1_score = 0
